@@ -1,21 +1,35 @@
+#!/usr/bin/env python3
+"""
+scripts/sanity.py — Environment sanity check
+
+Prints Python version, platform, current working directory,
+and installed packages from requirements-prework.txt.
+"""
 import sys
 import platform
 import os
 from importlib.metadata import version, PackageNotFoundError
 
-# Python version
-print("Python version:", sys.version)
+PACKAGES = [
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "scipy",
+    "jupyter",
+    "ipykernel",
+    "requests",
+    "pytest",
+    "python-dotenv",
+]
 
-# Platform info
-print("Platform:", platform.platform())
-
-# Current working directory
-print("Working directory:", os.getcwd())
-
-# Check package versions
-packages = ["numpy", "pandas", "matplotlib", "scipy", "requests", "pytest"]
-for pkg in packages:
+print(f"Python version:  {sys.version}")
+print(f"Platform:        {platform.platform()}")
+print(f"Working dir:     {os.getcwd()}")
+print()
+print("Installed packages:")
+for pkg in PACKAGES:
     try:
-        print(f"{pkg} version:", version(pkg))
+        v = version(pkg)
+        print(f"  {pkg}: {v}")
     except PackageNotFoundError:
-        print(f"{pkg} is NOT installed")
+        print(f"  {pkg}: NOT FOUND")
